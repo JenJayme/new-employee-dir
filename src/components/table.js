@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -21,7 +23,6 @@ import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import rows from '../components/data';
-
 
 
 function descendingComparator(a, b, orderBy) {
@@ -52,7 +53,7 @@ function stableSort(array, comparator) {
 
 // column headings with properties for sorting
 const headCells = [
-  { id: "photo", numeric: true, disablePadding: true, label: "photo" },
+  { id: "photo", numeric: false, disablePadding: true, label: "photo" },
   {
     id: "firstName",
     numeric: false,
@@ -90,7 +91,7 @@ function EnhancedTableHead(props) {
 
   //return heading row
   return (
-    <TableHead>
+    <TableHead className="mainDiv">
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
@@ -103,7 +104,7 @@ function EnhancedTableHead(props) {
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align="left"
             padding={headCell.disablePadding ? "none" : "default"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -159,47 +160,54 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
+  const filterFct = () => {
+    console.log("Filter button clicked")
+  }
 
   return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          className={classes.title}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          className={classes.title}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
+    <div>
+      <Container className="mainDiv">
+        <Toolbar
+          className={clsx(classes.root, {
+            [classes.highlight]: numSelected > 0
+          })}
+            >
+          {numSelected > 0 ? (
+            <Typography
+              className={classes.title}
+              color="inherit"
+              variant="subtitle1"
+              component="div"
+            >
+              {numSelected} selected
+            </Typography>
+          ) : (
+            <Typography
+              className={classes.title}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+            >
 
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
+            </Typography>
+          )}
+
+          {numSelected > 0 ? (
+            <Tooltip title="Delete">
+              <IconButton aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Filter list">
+              <IconButton aria-label="filter list">
+                <FilterListIcon onClick={filterFct()} />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Toolbar>
+      </Container>
+    </div>
   );
 };
 
@@ -238,7 +246,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(12);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -339,7 +347,9 @@ export default function EnhancedTable() {
                       </TableCell>
 
                       <TableCell>
-                        <img src={row.photo} alt={row.lastName}></img>
+                        <img src={process.env.PUBLIC_URL + "../../public/images/" + row.photo}
+                        alt={row.lastName}></img>
+
                       </TableCell>
                       <TableCell>{row.firstName}</TableCell>
                       <TableCell>{row.lastName}</TableCell>
@@ -348,14 +358,11 @@ export default function EnhancedTable() {
                       <TableCell>{row.birthday}</TableCell>
                       <TableCell>{row.email}</TableCell>
                       <TableCell>{row.phone}</TableCell>
-                      <TableCell>
-                        <img src={row.photo} alt={row.lastName}></img>
-                      </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
-                        align="right"
+                        align="left"
                         padding="none"
                       >
                         {row.id}
@@ -381,10 +388,10 @@ export default function EnhancedTable() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </div>
   );
 }

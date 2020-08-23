@@ -1,4 +1,4 @@
-let Employees = [
+let rows = [
     {
       id: "1000",
       firstName: "Leslie",
@@ -122,4 +122,4 @@ let Employees = [
     }
   ]
 
-  export default Employees;
+  export default rows;

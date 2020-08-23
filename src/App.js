@@ -3,6 +3,7 @@ import logo from './logo.png';
 import './App.css';
 import Box from '@material-ui/core/Box';
 import EmployeeTable from './components/table';
+import Searchbar from './components/Searchbar';
 
 function App() {
   return (
@@ -11,9 +12,9 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <h2>City of Pawnee Employee Directory</h2>
       </header>
-      <Box>
-        <h5>Box in app.js starts here</h5>
-        <EmployeeTable />
+      <Box className="mainDiv">
+        <Searchbar/>
+        <EmployeeTable/>
       </Box>
     </div>
   );
