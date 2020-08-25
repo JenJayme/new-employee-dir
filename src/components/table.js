@@ -23,6 +23,8 @@ import Switch from "@material-ui/core/Switch";
 import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import rows from '../components/data';
+import Searchbar from '../components/Searchbar';
+import $ from "jquery";
 
 
 function descendingComparator(a, b, orderBy) {
@@ -160,9 +162,6 @@ const useToolbarStyles = makeStyles((theme) => ({
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
-  const filterFct = () => {
-    console.log("Filter button clicked")
-  }
 
   return (
     <div>
@@ -200,8 +199,9 @@ const EnhancedTableToolbar = (props) => {
             </Tooltip>
           ) : (
             <Tooltip title="Filter list">
-              <IconButton aria-label="filter list">
-                <FilterListIcon onClick={filterFct()} />
+              <IconButton aria-label="filter list" id="filterBtn">
+                {/* <FilterListIcon/> */}
+                <Searchbar/>
               </IconButton>
             </Tooltip>
           )}
@@ -301,6 +301,18 @@ export default function EnhancedTable() {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const filterFct = () => {
+    console.log("Filter button clicked")
+  }
+  
+  $("#searchInput").on("keyup", function() {
+    console.log("Clicked filter button...");
+    var value = $(this).val().toLowerCase();
+    $("#employeeTable TableRow").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -311,6 +323,7 @@ export default function EnhancedTable() {
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
             aria-label="enhanced table"
+            id="employeeTable"
           >
             <EnhancedTableHead
               classes={classes}

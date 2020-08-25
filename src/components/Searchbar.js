@@ -2,9 +2,19 @@ import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import $ from "jquery";
+
 
 
 function Searchbar () {
+
+    $("#searchInput").on("keyup", function() {
+        console.log("Clicked filter button...");
+        var value = $(this).val().toLowerCase();
+        $("#employeeTable TableRow").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
     // state = {
     //     inputVal:'',
     //     results:[]

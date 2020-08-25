@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import EmployeeTable from './components/table';
 import Searchbar from './components/Searchbar';
 
+
 function App() {
   return (
     <div className="App">
@@ -13,7 +14,6 @@ function App() {
         <h2>City of Pawnee Employee Directory</h2>
       </header>
       <Box className="mainDiv">
-        <Searchbar/>
         <EmployeeTable/>
       </Box>
     </div>
