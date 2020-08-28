@@ -22,6 +22,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin-bottom: 1em;
 }
 
 .App-link {
@@ -37,10 +38,19 @@
   }
 }
 
+.headerRow {
+  padding-left: .5em;
+  background-color: tan;
+}
+
 .mainDiv {
   width: 70%;
   margin-left: 15%;
   margin-right: 15%;
+}
+
+.photos {
+  height: 50%;
 }
 
 .searchbar {

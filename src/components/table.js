@@ -1,4 +1,4 @@
-import React from "react";
+import React, { UseState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -55,7 +55,7 @@ function stableSort(array, comparator) {
 
 // column headings with properties for sorting
 const headCells = [
-  { id: "photo", numeric: false, disablePadding: true, label: "photo" },
+  { id: "photo", numeric: false, disablePadding: true, label: "Photo" },
   {
     id: "firstName",
     numeric: false,
@@ -94,15 +94,15 @@ function EnhancedTableHead(props) {
   //return heading row
   return (
     <TableHead className="mainDiv">
-      <TableRow>
-        <TableCell padding="checkbox">
+      <TableRow className="headerRow">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ "aria-label": "select all" }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -115,14 +115,14 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <h3>{headCell.label}</h3>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </span>
               ) : null}
             </TableSortLabel>
-          </TableCell>
+            </TableCell>
         ))}
       </TableRow>
     </TableHead>
@@ -187,7 +187,8 @@ const EnhancedTableToolbar = (props) => {
               id="tableTitle"
               component="div"
             >
-
+            Click on any heading to sort data by that column. <br></br>
+            Click on the filter icon at right to filter by birthday month.
             </Typography>
           )}
 
@@ -200,8 +201,8 @@ const EnhancedTableToolbar = (props) => {
           ) : (
             <Tooltip title="Filter list">
               <IconButton aria-label="filter list" id="filterBtn">
-                {/* <FilterListIcon/> */}
-                <Searchbar/>
+                <FilterListIcon/>
+                {/* <Searchbar/> */}
               </IconButton>
             </Tooltip>
           )}
@@ -246,7 +247,15 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(12);
+  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+
+  //==============================================================
+  //hook to make filter function work
+
+  // const [rowsData, setRowsData] = React.useState(0);
+  // setRowsData(rows);
+
+  //==============================================================
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -255,6 +264,32 @@ export default function EnhancedTable() {
   };
 
   const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = rows.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+
+  //Attempt at filter function
+  const handleFilterClick = (event) => {
+
+    $("#filterBtn").click(function () {
+
+      alert("Clicked filter button...");
+
+      $(rows).filter( row => row.firstName === "Leslie");
+
+      const newSelecteds = rows.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+      // setSelected([])     
+    )
+
+
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
       setSelected(newSelecteds);
@@ -304,14 +339,7 @@ export default function EnhancedTable() {
   const filterFct = () => {
     console.log("Filter button clicked")
   }
-  
-  $("#searchInput").on("keyup", function() {
-    console.log("Clicked filter button...");
-    var value = $(this).val().toLowerCase();
-    $("#employeeTable TableRow").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
+
 
   return (
     <div className={classes.root}>
@@ -319,6 +347,7 @@ export default function EnhancedTable() {
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
+            stickyHeader
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
@@ -352,16 +381,16 @@ export default function EnhancedTable() {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
                         />
-                      </TableCell>
+                      </TableCell> */}
 
                       <TableCell>
-                        <img src={process.env.PUBLIC_URL + "../../public/images/" + row.photo}
-                        alt={row.lastName}></img>
+                        <img src={process.env.PUBLIC_URL + "/images/" + row.photo}
+                        alt={row.lastName} className="photos"></img>
 
                       </TableCell>
                       <TableCell>{row.firstName}</TableCell>

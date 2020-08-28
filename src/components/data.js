@@ -6,6 +6,7 @@ let rows = [
       title: "Deputy Director",
       department: "City of Pawnee Parks and Recreation",
       birthday: "1/18/1975",
+      bdayMonth: "January",
       email: "lknope@pawnee.org",
       phone: "(765) 747-4858",
       photo: "knope.jpg",
@@ -16,6 +17,7 @@ let rows = [
       title: "Auditor",
       department: "State of Indiana",
       birthday: "11/14/1974",
+      bdayMonth: "November",
       email: "bwyatt@stateofindiana.gov",
       phone: "(765) 747-2398",
       photo: "wyatt.jpg"
@@ -26,6 +28,7 @@ let rows = [
       title: "Deputy Director of Animal Control",
       department: "City of Pawnee Parks and Recreation",
       birthday: "11/13/1989",
+      bdayMonth: "November",
       email: "aludgate@pawnee.org",
       phone: "(765) 747-9574",
       photo: "ludgate.jpg"
@@ -36,6 +39,7 @@ let rows = [
       title: "Shoe Shinist and Karate Master",
       department: "City of Pawnee Parks and Recreation",
       birthday: "1/1/1981",
+      bdayMonth: "January",
       email: "mouserat@yahoo.com",
       phone: "(765) 747-2786",
       photo: "dwyer.jpg"
@@ -46,6 +50,7 @@ let rows = [
       title: "Director",
       department: "City of Pawnee Parks and Recreation",
       birthday: "5/6/1967",
+      bdayMonth: "May",
       email: "rswanson@pawnee.org",
       phone: "(765) 747-4857",
       photo: "swanson.jpg"
@@ -56,6 +61,7 @@ let rows = [
       title: "Administrator",
       department: "City of Pawnee Parks and Recreation",
       birthday: "4/28/1985",
+      bdayMonth: "April",
       email: "thaverford@pawnee.org",
       phone: "(765) 747-4859",
       photo: "haverford.jpg"
@@ -66,6 +72,7 @@ let rows = [
       title: "Senior Auditor",
       department: "State of Indiana",
       birthday: "10/26/1969",
+      bdayMonth: "October",
       email: "ctraeger@stateofindiana.gov",
       phone: "(765) 747-2396",
       photo: "traeger.jpg"
@@ -76,6 +83,7 @@ let rows = [
       title: "Office Manager",
       department: "City of Pawnee Parks and Recreation",
       birthday: "3/10/1965",
+      bdayMonth: "March",
       email: "dmeagle@pawnee.org",
       phone: "(765) 747-4850",
       photo: "meagle.jpg"
@@ -86,6 +94,7 @@ let rows = [
       title: "Employee",
       department: "City of Pawnee Parks and Recreation",
       birthday: "2/29/1948",
+      bdayMonth: "February",
       email: "jgergich@pawnee.org",
       phone: "(765) 747-4852",
       photo: "gergich.jpg"
@@ -96,6 +105,7 @@ let rows = [
       title: "Public Relations Director",
       department: "City of Pawnee Health Department",
       birthday: "7/20/1976",
+      bdayMonth: "July",
       email: "aperkins@pawneehealth.org",
       phone: "(765) 747-1529",
       photo: "perkins.jpg"
@@ -106,6 +116,7 @@ let rows = [
       title: "City Planner",
       department: "City of Pawnee Municipal Government",
       birthday: "1/11/1975",
+      bdayMonth: "January",
       email: "mark@pawnee.org",
       phone: "(765) 747-1529",
       photo: "mark.jpg"
@@ -116,6 +127,7 @@ let rows = [
       title: "Director",
       department: "City of Pawnee Department of Education",
       birthday: "3/5/1953",
+      bdayMonth: "March",
       email: "mgriggs@pawneeschools.org",
       phone: "(765) 747-1529",
       photo: "griggs.jpg"
