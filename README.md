@@ -16,19 +16,19 @@ This Employee Directory presents a table of employee photos and information for 
 ## [Getting Started](#start)
 
 ### Download the app from Git Hub here:
-* [Repo URL](https://github.com/jenjayme/employee-directory)
+* [Repo URL](https://github.com/jenjayme/new-employee-directory)
 
 In the project directory, run:
 ### `npm start`
 
 ### <a id="demo">View a demo:</a> 
-* [Deployed on GitHub Page](https://jenjayme.github.io/employee-directory/#demo)
+* [Deployed on GitHub Page](https://jenjayme.github.io/new-employee-directory/#demo)
 <hr>
 
 ## [Visuals](#visuals)
 
 
-![Example Gif](./images/example.gif)
+![Example Gif](./public/example.gif)
 
 <hr>
 
