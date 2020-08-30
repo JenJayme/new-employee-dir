@@ -30,6 +30,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import $ from "jquery";
+import EmployeeCard from './Card';
 
 
 //SORT FUNCTIONS
@@ -84,7 +85,7 @@ const headCells = [
 ];
 
 //FUNCTION TO GENERATE HEADER WITH SORT CAPABILITIES
-function EnhancedTableHead(props) {
+function EmployeeTableHead(props) {
   const {
     classes,
     onSelectAllClick,
@@ -130,7 +131,7 @@ function EnhancedTableHead(props) {
 }
 
 //PASSES PROPERTIES TO TABLE
-EnhancedTableHead.propTypes = {
+EmployeeTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
@@ -169,36 +170,45 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 
-//TABLE HEADER WITH FILTER ICON
+//TABLE HEADER WITH FILTER ICON - THIS DOESN'T WORK
 const FilterHeader = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
-  const [filter, setFilter] = useState(null);
+  // const [filter, setFilter] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState("All");
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.title = `Filter = ${filter}`;
-    // filterFct(filter);
+    document.title = `SelectedMonth= ${selectedMonth}`;
+
+    function filterbyBday (selectedMonth) {
+      setSelectedMonth(selectedMonth)
+    } 
+
   });
 
-  var selectedMonth;
+  // var selectedMonth;
+  //*******************************************************************8 */
+  var filteredRows;
 
   const filterFct = (props) => {
 
     let selectedMonth = props.target.value;
-    alert("Filter button clicked");
+    // alert("Filter button clicked");
     console.log("ROWS =", rows);
     
     // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
-    const filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
-    console.log("BIRTHDAYS IN ", selectedMonth, filteredRows);
+    let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
+
+    console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
     console.log("FILTER ON: ", selectedMonth);
     console.log("PROPS.TARGET.VALUE: ", props.target.value);
-    console.log("PROPS.TARGET: ", props.target.value);
+
+    return filteredRows;
 
   }
-
+//********************************************************************** */
 
   return (
     <div>
@@ -233,11 +243,12 @@ const FilterHeader = (props) => {
                           labelId="demo-simple-select-outlined-label"
                           autoWidth
                           id="bdayDropdown"
+                          defaultValue="All"
                           value={selectedMonth}
                           onChange={filterFct}
                           label="Birthday Month"
                           >
-                              <MenuItem value="">
+                              <MenuItem value="All">
                                   <em>All</em>
                               </MenuItem>
                               <MenuItem value={"January"}>January</MenuItem>
@@ -294,19 +305,28 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function EnhancedTable() {
+export default function EmployeeTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("lastName");
   const [selected, setSelected] = React.useState([]);
+  const [selectedMonth, setSelectedMonth] = React.useState("January");
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
 
-  //==============================================================
-  //hook to make filter function work
+  let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
+  console.log("SELECTED MONTH IN TABLE FCT", selectedMonth)
 
-  // const [rowsData, setRowsData] = React.useState(0);
+  // console.log("FILTERED ROWS IN TABLE FCT", filteredRows)
+  // console.log("SELECTED MONTH IN TABLE FCT", selectedMonth)
+  // console.log("PROPS", props)
+
+
+  //==============================================================
+  //STARTING TO CHANGE DATA.MAP FUNCTION TO USESTATE
+
+  // const [rowsData, setRowsData] = React.useState([0]);
   // setRowsData(rows);
 
   //==============================================================
@@ -326,33 +346,9 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
-
-  //Attempt at filter function
-  const handleFilterClick = (event) => {
-
-    $("#filterBtn").click(function () {
-
-      alert("Clicked filter button...");
-
-      $(rows).filter( row => row.firstName === "Leslie");
-
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-      // setSelected([])     
-    )
-
-
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
   const handleClick = (event, name) => {
+    
+    // alert("HandleClick function engaged...");
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
 
@@ -368,7 +364,6 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1)
       );
     }
-
     setSelected(newSelected);
   };
 
@@ -385,7 +380,8 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (bdayMonth) => rows.bdayMonth;
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -400,23 +396,24 @@ export default function EnhancedTable() {
             className={classes.table}
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
-            aria-label="enhanced table"
+            aria-label="Employee Table"
             id="employeeTable"
           >
-            <EnhancedTableHead
+            <EmployeeTableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
+                  console.log("ROW.NAME: ", row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   // Populate with employee data
