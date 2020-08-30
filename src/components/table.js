@@ -1,4 +1,4 @@
-import React, { UseState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
@@ -27,6 +27,8 @@ import Searchbar from '../components/Searchbar';
 import $ from "jquery";
 
 
+//SORT FUNCTIONS
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -53,7 +55,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-// column headings with properties for sorting
+// COLUMN HEADINGS WITH PROPERTIES FOR SORTING
 const headCells = [
   { id: "photo", numeric: false, disablePadding: true, label: "Photo" },
   {
@@ -76,7 +78,7 @@ const headCells = [
   { id: "id", numeric: true, disablePadding: true, label: "Employee ID" }
 ];
 
-//sort functions on columns
+//FUNCTION TO GENERATE HEADER WITH SORT CAPABILITIES
 function EnhancedTableHead(props) {
   const {
     classes,
@@ -91,18 +93,11 @@ function EnhancedTableHead(props) {
     onRequestSort(event, property);
   };
 
-  //return heading row
+  //RETURNS HEADING ROW
   return (
     <TableHead className="mainDiv">
       <TableRow className="headerRow">
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ "aria-label": "select all" }}
-          />
-        </TableCell> */}
+
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -129,6 +124,7 @@ function EnhancedTableHead(props) {
   );
 }
 
+//PASSES PROPERTIES TO TABLE
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
@@ -139,6 +135,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired
 };
 
+//STYLES FOR TABLE - MATERIAL UI APPROACH
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -159,60 +156,67 @@ const useToolbarStyles = makeStyles((theme) => ({
   }
 }));
 
-const EnhancedTableToolbar = (props) => {
+
+//TABLE HEADER WITH FILTER ICON
+const FilterHeader = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
 
+  const [filter, setFilter] = useState(null);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `Filter = ${filter}`;
+    // filterFct(filter);
+  });
+
+  const filterFct = (props) => {
+
+    let filter = "January";
+    alert("Filter button clicked");
+    console.log("ROWS =", rows);
+    
+    // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
+    const filteredRows = rows.filter(rows => rows.bdayMonth === filter);
+    console.log("BIRTHDAYS IN JANUARY =", filteredRows);
+    console.log("FILTER ON: ", filter);
+  }
+
+
   return (
     <div>
-      <Container className="mainDiv">
+      <Container className="mainDiv
+      ">
         <Toolbar
           className={clsx(classes.root, {
             [classes.highlight]: numSelected > 0
           })}
             >
-          {numSelected > 0 ? (
-            <Typography
-              className={classes.title}
-              color="inherit"
-              variant="subtitle1"
-              component="div"
-            >
-              {numSelected} selected
-            </Typography>
-          ) : (
+
             <Typography
               className={classes.title}
               variant="h6"
               id="tableTitle"
-              component="div"
-            >
+              component="div">
+
             Click on any heading to sort data by that column. <br></br>
             Click on the filter icon at right to filter by birthday month.
+            
             </Typography>
-          )}
-
-          {numSelected > 0 ? (
-            <Tooltip title="Delete">
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-            </Tooltip>
-          ) : (
+            
             <Tooltip title="Filter list">
-              <IconButton aria-label="filter list" id="filterBtn">
+              <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}>
                 <FilterListIcon/>
                 {/* <Searchbar/> */}
               </IconButton>
             </Tooltip>
-          )}
         </Toolbar>
       </Container>
     </div>
   );
 };
 
-EnhancedTableToolbar.propTypes = {
+FilterHeader.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
@@ -336,15 +340,10 @@ export default function EnhancedTable() {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const filterFct = () => {
-    console.log("Filter button clicked")
-  }
-
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <FilterHeader numSelected={selected.length} />
         <TableContainer>
           <Table
             stickyHeader
