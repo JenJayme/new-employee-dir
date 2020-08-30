@@ -24,6 +24,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import rows from '../components/data';
 import Searchbar from '../components/Searchbar';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import $ from "jquery";
 
 
@@ -153,7 +158,14 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: "1 1 100%"
-  }
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 150,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 
@@ -170,16 +182,21 @@ const FilterHeader = (props) => {
     // filterFct(filter);
   });
 
+  var selectedMonth;
+
   const filterFct = (props) => {
 
-    let filter = "January";
+    let selectedMonth = props.target.value;
     alert("Filter button clicked");
     console.log("ROWS =", rows);
     
     // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
-    const filteredRows = rows.filter(rows => rows.bdayMonth === filter);
-    console.log("BIRTHDAYS IN JANUARY =", filteredRows);
-    console.log("FILTER ON: ", filter);
+    const filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
+    console.log("BIRTHDAYS IN ", selectedMonth, filteredRows);
+    console.log("FILTER ON: ", selectedMonth);
+    console.log("PROPS.TARGET.VALUE: ", props.target.value);
+    console.log("PROPS.TARGET: ", props.target.value);
+
   }
 
 
@@ -205,10 +222,43 @@ const FilterHeader = (props) => {
             </Typography>
             
             <Tooltip title="Filter list">
-              <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}>
-                <FilterListIcon/>
+              {/* <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}> */}
+                {/* <FilterListIcon/> */}
+
+              <div>
+                  <FormControl variant="outlined" className={classes.formControl}>
+                      <InputLabel id="demo-simple-select-outlined-label">Birthday Month</InputLabel>
+                      {/* <FormHelperText>Filter by</FormHelperText> */}
+                          <Select
+                          labelId="demo-simple-select-outlined-label"
+                          autoWidth
+                          id="bdayDropdown"
+                          value={selectedMonth}
+                          onChange={filterFct}
+                          label="Birthday Month"
+                          >
+                              <MenuItem value="">
+                                  <em>All</em>
+                              </MenuItem>
+                              <MenuItem value={"January"}>January</MenuItem>
+                              <MenuItem value={"February"}>February</MenuItem>
+                              <MenuItem value={"March"}>March</MenuItem>
+                              <MenuItem value={"April"}>April</MenuItem>
+                              <MenuItem value={"May"}>May</MenuItem>
+                              <MenuItem value={"June"}>June</MenuItem>
+                              <MenuItem value={"July"}>July</MenuItem>
+                              <MenuItem value={"August"}>August</MenuItem>
+                              <MenuItem value={"September"}>September</MenuItem>
+                              <MenuItem value={"October"}>October</MenuItem>
+                              <MenuItem value={"November"}>November</MenuItem>
+                              <MenuItem value={"December"}>December</MenuItem>
+                          </Select>
+                    </FormControl>
+              </div>
+
+
                 {/* <Searchbar/> */}
-              </IconButton>
+              {/* </IconButton> */}
             </Tooltip>
         </Toolbar>
       </Container>

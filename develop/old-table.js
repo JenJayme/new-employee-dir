@@ -1,6 +1,6 @@
 //PARENT COMPONENT WITH DATA inc CONSTRUCT ARRAY OF ITEMS
 import React from 'react';
-import Employees from './data';
+import Employees from '../src/components/data';
 // import { Table } from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 
