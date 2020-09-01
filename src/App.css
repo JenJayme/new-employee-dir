@@ -3,8 +3,9 @@
 }
 
 .App-logo {
-  height: 20vmin;
+  height: 22vmin;
   pointer-events: none;
+  padding-bottom: .5em;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -14,6 +15,7 @@
 }
 
 .App-header {
+  padding-top: 1.4em;
   background-color: #0d2353;
   min-height: 20vh;
   display: flex;
@@ -38,15 +40,27 @@
   }
 }
 
+.dropDownDiv {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  display: block;
+  float: right;
+}
+
 .headerRow {
   padding-left: .5em;
   background-color: tan;
 }
 
+.hidden {
+  display: none;
+  visibility: none;
+}
+
 .mainDiv {
-  width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .photos {

@@ -26,23 +26,23 @@ function Dropdown (props) {
 
     const classes = useStyles();
 
-    const filterFct = (props) => {
+//     const filterFct = (props) => {
 
-    let selectedMonth = props.target.value;
-    // alert("Filter button clicked");
-    console.log("ROWS =", rows);
+//     let selectedMonth = props.target.value;
+//     // alert("Filter button clicked");
+//     console.log("ROWS =", rows);
     
-    // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
-    let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
+//     // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
+//     let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
 
-    console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
-    console.log("FILTER ON: ", selectedMonth);
-    console.log("PROPS.TARGET.VALUE: ", props.target.value);
+//     console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
+//     console.log("FILTER ON: ", selectedMonth);
+//     console.log("PROPS.TARGET.VALUE: ", props.target.value);
 
-    props.data = filteredRows;
-    return filteredRows;
+//     props.data = filteredRows;
+//     return filteredRows;
 
-  }
+//   }
 
 
     return (
@@ -55,8 +55,8 @@ function Dropdown (props) {
                 autoWidth
                 id="bdayDropdown"
                 defaultValue="All"
-                value={selectedMonth}
-                onChange={filterFct}
+                value={props.value}
+                onChange={props.onChange}
                 label="Birthday Month"
                 >
                     <MenuItem value="All">

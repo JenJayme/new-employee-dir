@@ -161,11 +161,14 @@ const useToolbarStyles = makeStyles((theme) => ({
           backgroundColor: theme.palette.secondary.dark
         },
   title: {
-    flex: "1 1 100%"
+    flex: "1 1 100%",
+    display: 'block',
+    float: 'right',
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 150,
+    marginTop: '1em'
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -183,7 +186,7 @@ const FilterHeader = (props) => {
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.title = `SelectedMonth= ${selectedMonth}`;
+    document.title = `Home of Little Sebastian`;
 
     function filterbyBday (selectedMonth) {
       setSelectedMonth(selectedMonth)
@@ -192,35 +195,10 @@ const FilterHeader = (props) => {
   });
 
   // var selectedMonth;
-  //*******************************************************************8 */
-  var filteredRows;
-
-  const filterFct = (props) => {
-
-    let selectedMonth = props.target.value;
-    // alert("Filter button clicked");
-    console.log("ROWS =", rows);
-    
-    // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
-    let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
-
-    console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
-    console.log("FILTER ON: ", selectedMonth);
-    console.log("PROPS.TARGET.VALUE: ", props.target.value);
-
-    data = filteredRows;
-    return filteredRows;
-
-  }
-//********************************************************************** */
 
   return (
     <div>
-      <Container className="mainDiv">
-
-        <Grid container>
-
-          <Grid item>
+      <Container maxWidth="sm" className="mainDiv">
 
             <Toolbar
               className={clsx(classes.root, {
@@ -228,17 +206,16 @@ const FilterHeader = (props) => {
               })}
                 >
 
+                <div id="instructions">
                 <Typography
                   className={classes.title}
                   variant="h6"
                   id="tableTitle"
                   component="div">
 
-                Click on any heading to sort data by that column. <br></br>
-                Click on the filter icon at right to filter by birthday month.
-                
+                Click on any heading to sort data by that column or choose a month to filter by birthday.
                 </Typography>
-                
+                </div>
                 {/* <Tooltip title="Filter list"> */}
                   {/* <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}> */}
                     {/* <FilterListIcon/> */}
@@ -246,12 +223,6 @@ const FilterHeader = (props) => {
                   {/* </IconButton> */}
                 {/* </Tooltip> */}
             </Toolbar>
-
-          </Grid>
-
-          <Grid item></Grid>
-
-        </Grid>
 
       </Container>
     </div>
@@ -267,7 +238,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%"
   },
   announceBar: {
-    width: "70%",
+    width: "100%",
     display: 'inline-block',
     alignItems: 'left',
     float: 'right',
@@ -297,10 +268,11 @@ export default function EmployeeTable() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("lastName");
   const [selected, setSelected] = React.useState([]);
-  const [selectedMonth, setSelectedMonth] = React.useState("January");
+  const [selectedMonth, setSelectedMonth] = React.useState(null);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [rowsData, setRowsData] = React.useState(rows);
 
   let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
   console.log("SELECTED MONTH IN TABLE FCT", selectedMonth)
@@ -320,10 +292,39 @@ export default function EmployeeTable() {
   //where months function is, needs to set rowsData to the new filteredData
 
   // data = rows;
-  const [rowsData, setRowsData] = React.useState(rows);
   // setRowsData(rowsData);
 
   //==============================================================
+
+  //*******************************************************************8 */
+    // var filteredRows;
+
+    const filterFct = (props) => {
+  
+      let selectedMonth = props.target.value;
+
+      // setSelectedMonth(props.target)
+      // alert("Filter button clicked");
+      console.log("ROWS =", rows);
+      
+      // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
+      let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
+  
+      // console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
+      // console.log("FILTER ON: ", selectedMonth);
+      // console.log("PROPS.TARGET.VALUE: ", props.target.value);
+  
+      data = filteredRows;
+      
+      console.log('DATA = ', data)
+      setRowsData(data);
+  
+      return filteredRows;
+  
+    }
+  //********************************************************************** */
+  
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -385,7 +386,12 @@ export default function EmployeeTable() {
       <Paper className={classes.paper}>
         <FilterHeader numSelected={selected.length} />
 
-        <Dropdown />
+        <Container className="dropDownDiv">
+
+        <Dropdown onChange={filterFct} value={selectedMonth}/>
+
+        </Container>
+        {/* <div id="bDayMsg"></div> */}
 
 
         <TableContainer>
@@ -414,7 +420,7 @@ export default function EmployeeTable() {
                 // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
-                  console.log("ROW.NAME: ", row.name);
+                  console.log("ROWSDATA LENGTH: ", rowsData.length);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   // Populate with employee data
@@ -428,31 +434,26 @@ export default function EmployeeTable() {
                       key={row.id}
                       selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ "aria-labelledby": labelId }}
-                        />
-                      </TableCell> */}
 
-                      <TableCell>
+                      <TableCell colSpan={1}>
                         <img src={process.env.PUBLIC_URL + "/images/" + row.photo}
                         alt={row.lastName} className="photos"></img>
 
                       </TableCell>
-                      <TableCell>{row.firstName}</TableCell>
-                      <TableCell>{row.lastName}</TableCell>
-                      <TableCell>{row.title}</TableCell>
-                      <TableCell>{row.department}</TableCell>
-                      <TableCell>{row.birthday}</TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.phone}</TableCell>
+                      <TableCell colSpan={1}>{row.firstName}</TableCell>
+                      <TableCell colSpan={1}>{row.lastName}</TableCell>
+                      <TableCell colSpan={1}>{row.title}</TableCell>
+                      <TableCell colSpan={1}>{row.department}</TableCell>
+                      <TableCell colSpan={1}>{row.birthday}</TableCell>
+                      <TableCell colSpan={1}>{row.email}</TableCell>
+                      <TableCell colSpan={1}>{row.phone}</TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         align="left"
                         padding="none"
+                        colSpan={1}
                       >
                         {row.id}
                       </TableCell>
