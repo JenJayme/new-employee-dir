@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -14,22 +13,10 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
+import Grid from '@material-ui/core/Grid';
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
 import rows from '../components/data';
-import Searchbar from '../components/Searchbar';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import $ from "jquery";
 import EmployeeCard from './Card';
 import Dropdown from "./Dropdown";
@@ -91,7 +78,6 @@ const headCells = [
 function EmployeeTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
     order,
     orderBy,
     numSelected,
@@ -138,7 +124,6 @@ EmployeeTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired
@@ -187,10 +172,6 @@ const FilterHeader = (props) => {
   useEffect(() => {
     // Update the document title using the browser API
     document.title = `Home of Little Sebastian`;
-
-    function filterbyBday (selectedMonth) {
-      setSelectedMonth(selectedMonth)
-    } 
 
   });
 
@@ -268,50 +249,32 @@ export default function EmployeeTable() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("lastName");
   const [selected, setSelected] = React.useState([]);
-  const [selectedMonth, setSelectedMonth] = React.useState(null);
+  const [selectedMonth, setSelectedMonth] = React.useState('');
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(15);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const [rowsData, setRowsData] = React.useState(rows);
 
   let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
-  console.log("SELECTED MONTH IN TABLE FCT", selectedMonth)
 
   // console.log("FILTERED ROWS IN TABLE FCT", filteredRows)
   // console.log("SELECTED MONTH IN TABLE FCT", selectedMonth)
   // console.log("PROPS", props)
 
 
-  //==============================================================
-  //STARTING TO CHANGE DATA.MAP FUNCTION TO USESTATE
-
-  //set rowsData equal to rows (imported data)
-  
-  //where you call rows, 
-
-  //where months function is, needs to set rowsData to the new filteredData
-
-  // data = rows;
-  // setRowsData(rowsData);
-
-  //==============================================================
-
   //*******************************************************************8 */
     // var filteredRows;
 
     const filterFct = (props) => {
   
-      let selectedMonth = props.target.value;
-
-      // setSelectedMonth(props.target)
-      // alert("Filter button clicked");
       console.log("ROWS =", rows);
+
+      let selectedMonth = props.target.value;
       
-      // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
       let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
   
       // console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
-      // console.log("FILTER ON: ", selectedMonth);
+      console.log("FILTER ON: ", selectedMonth);
       // console.log("PROPS.TARGET.VALUE: ", props.target.value);
   
       data = filteredRows;
@@ -324,6 +287,9 @@ export default function EmployeeTable() {
     }
   //********************************************************************** */
   
+  const showAll = () => {
+    setRowsData(rows)
+  }
 
 
   const handleRequestSort = (event, property) => {
@@ -385,14 +351,19 @@ export default function EmployeeTable() {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <FilterHeader numSelected={selected.length} />
+        
+        <Grid container className={classes.root} spacing={2}>
 
-        <Container className="dropDownDiv">
-
+        <Grid item xs={6} className={classes.joinTournDiv}>
+        <Button variant="contained" color="primary" onClick={showAll}>Refresh</Button>
+        </Grid>
+        <Grid item xs={4} className={classes.joinTournDiv}>
         <Dropdown onChange={filterFct} value={selectedMonth}/>
+        </Grid>
 
-        </Container>
+        </Grid>
+    
         {/* <div id="bDayMsg"></div> */}
-
 
         <TableContainer>
           <Table
@@ -408,7 +379,6 @@ export default function EmployeeTable() {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -420,7 +390,7 @@ export default function EmployeeTable() {
                 // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
-                  console.log("ROWSDATA LENGTH: ", rowsData.length);
+                  // console.log("ROWSDATA LENGTH: ", rowsData.length);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   // Populate with employee data

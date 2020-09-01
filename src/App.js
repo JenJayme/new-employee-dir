@@ -3,7 +3,6 @@ import logo from './logo.png';
 import './App.css';
 import Box from '@material-ui/core/Box';
 import EmployeeTable from './components/table';
-import Searchbar from './components/Searchbar';
 
 
 function App() {

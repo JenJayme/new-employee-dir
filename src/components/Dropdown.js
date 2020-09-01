@@ -5,11 +5,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import rows from './data';
 
 function Dropdown (props) {
-
-    var selectedMonth;
 
     const useStyles = makeStyles( ({
         root: {
@@ -17,44 +14,24 @@ function Dropdown (props) {
         },
         formcontrol: {
             margin: 1,
-            minWidth: 150,
+            width: 'fit-content',
             alignItems: 'right',
             display: 'block',
-            float: 'left',
+            float: 'right',
         }
         }));
 
     const classes = useStyles();
 
-//     const filterFct = (props) => {
-
-//     let selectedMonth = props.target.value;
-//     // alert("Filter button clicked");
-//     console.log("ROWS =", rows);
-    
-//     // const filteredRows = rows.filter(rows => rows.bdayMonth === props.bdayMonth);
-//     let filteredRows = rows.filter(rows => rows.bdayMonth === selectedMonth);
-
-//     console.log("BIRTHDAYS IN", selectedMonth, filteredRows);
-//     console.log("FILTER ON: ", selectedMonth);
-//     console.log("PROPS.TARGET.VALUE: ", props.target.value);
-
-//     props.data = filteredRows;
-//     return filteredRows;
-
-//   }
-
-
     return (
         <div>
         <FormControl variant="outlined" className={classes.formControl}>
-            <InputLabel id="demo-simple-select-outlined-label">Birthday Month</InputLabel>
-            {/* <FormHelperText>Filter by</FormHelperText> */}
+            <InputLabel id="demo-simple-select-outlined-label"></InputLabel>
+            <FormHelperText>Birthday Month</FormHelperText>
                 <Select
                 labelId="demo-simple-select-outlined-label"
                 autoWidth
                 id="bdayDropdown"
-                defaultValue="All"
                 value={props.value}
                 onChange={props.onChange}
                 label="Birthday Month"
