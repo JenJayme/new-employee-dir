@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
+import Grid from '@material-ui/core/Grid';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -31,7 +32,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import $ from "jquery";
 import EmployeeCard from './Card';
+import Dropdown from "./Dropdown";
 
+var data = rows;
 
 //SORT FUNCTIONS
 
@@ -176,7 +179,7 @@ const FilterHeader = (props) => {
   const { numSelected } = props;
 
   // const [filter, setFilter] = useState(null);
-  const [selectedMonth, setSelectedMonth] = useState("All");
+  const [selectedMonth, setSelectedMonth] = useState("");
 
   useEffect(() => {
     // Update the document title using the browser API
@@ -205,6 +208,7 @@ const FilterHeader = (props) => {
     console.log("FILTER ON: ", selectedMonth);
     console.log("PROPS.TARGET.VALUE: ", props.target.value);
 
+    data = filteredRows;
     return filteredRows;
 
   }
@@ -212,66 +216,43 @@ const FilterHeader = (props) => {
 
   return (
     <div>
-      <Container className="mainDiv
-      ">
-        <Toolbar
-          className={clsx(classes.root, {
-            [classes.highlight]: numSelected > 0
-          })}
-            >
+      <Container className="mainDiv">
 
-            <Typography
-              className={classes.title}
-              variant="h6"
-              id="tableTitle"
-              component="div">
+        <Grid container>
 
-            Click on any heading to sort data by that column. <br></br>
-            Click on the filter icon at right to filter by birthday month.
-            
-            </Typography>
-            
-            <Tooltip title="Filter list">
-              {/* <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}> */}
-                {/* <FilterListIcon/> */}
+          <Grid item>
 
-              <div>
-                  <FormControl variant="outlined" className={classes.formControl}>
-                      <InputLabel id="demo-simple-select-outlined-label">Birthday Month</InputLabel>
-                      {/* <FormHelperText>Filter by</FormHelperText> */}
-                          <Select
-                          labelId="demo-simple-select-outlined-label"
-                          autoWidth
-                          id="bdayDropdown"
-                          defaultValue="All"
-                          value={selectedMonth}
-                          onChange={filterFct}
-                          label="Birthday Month"
-                          >
-                              <MenuItem value="All">
-                                  <em>All</em>
-                              </MenuItem>
-                              <MenuItem value={"January"}>January</MenuItem>
-                              <MenuItem value={"February"}>February</MenuItem>
-                              <MenuItem value={"March"}>March</MenuItem>
-                              <MenuItem value={"April"}>April</MenuItem>
-                              <MenuItem value={"May"}>May</MenuItem>
-                              <MenuItem value={"June"}>June</MenuItem>
-                              <MenuItem value={"July"}>July</MenuItem>
-                              <MenuItem value={"August"}>August</MenuItem>
-                              <MenuItem value={"September"}>September</MenuItem>
-                              <MenuItem value={"October"}>October</MenuItem>
-                              <MenuItem value={"November"}>November</MenuItem>
-                              <MenuItem value={"December"}>December</MenuItem>
-                          </Select>
-                    </FormControl>
-              </div>
+            <Toolbar
+              className={clsx(classes.root, {
+                [classes.highlight]: numSelected > 0
+              })}
+                >
 
+                <Typography
+                  className={classes.title}
+                  variant="h6"
+                  id="tableTitle"
+                  component="div">
 
-                {/* <Searchbar/> */}
-              {/* </IconButton> */}
-            </Tooltip>
-        </Toolbar>
+                Click on any heading to sort data by that column. <br></br>
+                Click on the filter icon at right to filter by birthday month.
+                
+                </Typography>
+                
+                {/* <Tooltip title="Filter list"> */}
+                  {/* <IconButton aria-label="filter list" id="filterBtn" onClick={filterFct}> */}
+                    {/* <FilterListIcon/> */}
+                    {/* <Searchbar/> */}
+                  {/* </IconButton> */}
+                {/* </Tooltip> */}
+            </Toolbar>
+
+          </Grid>
+
+          <Grid item></Grid>
+
+        </Grid>
+
       </Container>
     </div>
   );
@@ -284,6 +265,12 @@ FilterHeader.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%"
+  },
+  announceBar: {
+    width: "70%",
+    display: 'inline-block',
+    alignItems: 'left',
+    float: 'right',
   },
   paper: {
     width: "100%",
@@ -326,8 +313,15 @@ export default function EmployeeTable() {
   //==============================================================
   //STARTING TO CHANGE DATA.MAP FUNCTION TO USESTATE
 
-  // const [rowsData, setRowsData] = React.useState([0]);
-  // setRowsData(rows);
+  //set rowsData equal to rows (imported data)
+  
+  //where you call rows, 
+
+  //where months function is, needs to set rowsData to the new filteredData
+
+  // data = rows;
+  const [rowsData, setRowsData] = React.useState(rows);
+  // setRowsData(rowsData);
 
   //==============================================================
 
@@ -390,6 +384,10 @@ export default function EmployeeTable() {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <FilterHeader numSelected={selected.length} />
+
+        <Dropdown />
+
+
         <TableContainer>
           <Table
             stickyHeader
@@ -409,7 +407,10 @@ export default function EmployeeTable() {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+
+{/* =============================================================== */}
+
+              {stableSort(rowsData, getComparator(order, orderBy))
                 // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
