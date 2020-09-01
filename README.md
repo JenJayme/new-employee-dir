@@ -22,7 +22,7 @@ In the project directory, run:
 ### `npm start`
 
 ### <a id="demo">View a demo:</a> 
-* [Deployed on GitHub Page](https://jenjayme.github.io/new-employee-directory/#demo)
+* [Deployed on GitHub Page](https://jenjayme.github.io/new-employee-dir/#demo)
 <hr>
 
 ## [Visuals](#visuals)
