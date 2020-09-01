@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/github/license/jenjayme/employee-directory)
 <hr>
 
-This Employee Directory presents a table of employee photos and information for easy reference, taking advantage of React.js to render images and data quickly and beautifully.
+This Employee Directory presents a table of employee photos and information for easy reference, taking advantage of React.js to render images and data quickly and beautifully.  Users can sort on any column by clicking the column heading, filter by birthday month, and refresh data.
 
 <hr>
 
