@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/github/license/jenjayme/employee-directory)
 <hr>
 
-This Employee Directory presents a table of employee photos and information for easy reference, taking advantage of React.js to render images and data quickly and beautifully.  Users can sort on any column by clicking the column heading, filter by birthday month, and refresh data.
+This app was built for a Berkeley Coding Boot Camp assignment which required use of React and stateful components to build a table which allows users to filter and sort on at least one field.  My Employee Directory presents an interactive table of employee photos and information featuring the cast of the hit comedy Parks and Recreation as seed data.  Users can sort on any column by clicking the column heading, filter by birthday month, and click a button to refresh the data.
 
 <hr>
 
@@ -57,4 +57,5 @@ For questions or to discuss collaborations on this or other projects, contact th
 
 ## Acknowledgements
 * Special thanks to Jerome Chenette, UC Berkeley Coding Boot Camp and Trilogy Education Services for referring this project.
-* Shout out to Fred Rodolfo for critical advice and support.
+* Shout out to Fred Rodolfo for critical tutoring advice and support.
+* Much love to Leslie Knope and her team from Parks and Rec for many hours of entertainment.  
