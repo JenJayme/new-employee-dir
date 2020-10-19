@@ -4,7 +4,9 @@
 ![License](https://img.shields.io/github/license/jenjayme/employee-directory)
 <hr>
 
-This app was built for a Berkeley Coding Boot Camp assignment which required use of React and stateful components to build a table which allows users to filter and sort on at least one field.  My Employee Directory presents an interactive table of employee photos and information featuring the cast of the hit comedy Parks and Recreation as seed data.  Users can sort on any column by clicking the column heading, filter by birthday month, and click a button to refresh the data.
+This app was built for a Berkeley Coding Boot Camp assignment which required use of React and stateful components to build a table which allows users to filter and sort on at least one field.  My Employee Directory presents an interactive table of employee photos and information featuring the cast of the hit comedy Parks and Recreation as seed data.  Users can sort on any column by clicking the column heading, filter by birthday month, and click a button to refresh the data.  
+
+This version is actually a rebuild of my original project.  In the first version, I used React Bootstrap for the style framework.  As I gained more experience in React, I discovered Material UI and came to prefer that.  I knew the decision to rebuild a Bootstrap app with Material UI encompassed extra work, but it was actually a great learning experience.
 
 <hr>
 
@@ -37,7 +39,7 @@ In the project directory, run:
 * [Javascript](https://www.javascript.com/)
 * [React.js](https://reactjs.org/)
 * [Create React App](https://github.com/facebook/create-react-app)
-* [React Bootstrap](https://react-bootstrap.github.io/)
+* [Material UI](https://material-ui.com/)
 * [VS Code](https://code.visualstudio.com/)
 * [Node.js](https://nodejs.org/)
 * [NPM](https://www.npmjs.com/)
