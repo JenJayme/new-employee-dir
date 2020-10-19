@@ -6,7 +6,7 @@
 
 This app was built for a Berkeley Coding Boot Camp assignment which required use of React and stateful components to build a table which allows users to filter and sort on at least one field.  My Employee Directory presents an interactive table of employee photos and information featuring the cast of the hit comedy Parks and Recreation as seed data.  Users can sort on any column by clicking the column heading, filter by birthday month, and click a button to refresh the data.  
 
-This version is actually a rebuild of my original project.  In the first version, I used React Bootstrap for the style framework.  As I gained more experience in React, I discovered Material UI and came to prefer that.  I knew the decision to rebuild a Bootstrap app with Material UI encompassed extra work, but it was actually a great learning experience.
+This version is actually a rebuild of my [original project](#original).  In the first version, I used React Bootstrap for the style framework.  As I gained more experience in React, I discovered Material UI and came to prefer that.  I knew the decision to rebuild a Bootstrap app with Material UI encompassed extra work, but it was actually a great learning experience.
 
 <hr>
 
@@ -17,14 +17,14 @@ This version is actually a rebuild of my original project.  In the first version
 
 ## [Getting Started](#start)
 
-### Download the app from Git Hub here:
-* [Repo URL](https://github.com/jenjayme/new-employee-directory)
+### Download the app from the Git Hub repo here:
+* [github.com/jenjayme/new-employee-directory](https://github.com/jenjayme/new-employee-directory)
 
 In the project directory, run:
-### `npm start`
+* ### `npm start`
 
-### <a id="demo">View a demo:</a> 
-* [Deployed on GitHub Page](https://jenjayme.github.io/new-employee-dir/#demo)
+### <a id="demo">View a demo here:</a> 
+* [jenjayme.github.io/new-employee-dir](https://jenjayme.github.io/new-employee-dir/#demo)
 <hr>
 
 ## [Visuals](#visuals)
@@ -44,6 +44,13 @@ In the project directory, run:
 * [Node.js](https://nodejs.org/)
 * [NPM](https://www.npmjs.com/)
 * [Express.js](https://expressjs.com/)
+
+<hr>
+
+## <a id="original">Original Version</a>
+My first version of the assignment, built with React Bootstrap, looked nice but didn't have the sort and filter functionality required, and I was still wrestling to learn how to build stateful components.  You can see the first version of my Employee Directory at the links below. 
+* [Version 1 Repo](https://github.com/JenJayme/employee-directory)
+* [Version 1 Deployed](https://jenjayme.github.io/employee-directory/)
 
 <hr>
 
